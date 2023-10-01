@@ -2,6 +2,7 @@
 
 require_relative 'yeah_dog/version'
 
+require 'datadog/statsd'
 require 'ddtrace'
 require 'statsd-instrument'
 

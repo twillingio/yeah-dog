@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'ddtrace', '~> 1.0'
+  spec.add_dependency 'dogstatsd-ruby', '~> 5.0'
   spec.add_dependency 'statsd-instrument', '~> 3.0'
 
   spec.add_development_dependency 'debug'
