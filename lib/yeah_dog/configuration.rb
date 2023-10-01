@@ -1,17 +1,29 @@
 # # frozen_string_literal: true
 
+require 'active_support/all'
+
 module YeahDog
   class Configuration
-    DEFAULT_APP_NAME = 'rails-app'.freeze
+    DEFAULT_SERVICE_NAME = 'rails-app'.freeze
 
-    def initialize; end
+    attr_accessor :service_name
 
-    attr_writer :app_name
+    def initialize
+      set_defaults
+    end
 
     def app_name
-      return @app_name if defined? @app_name
+      underscored_service_name.camelize
+    end
 
-      DEFAULT_APP_NAME
+    private
+
+    def set_defaults
+      self.service_name = DEFAULT_SERVICE_NAME
+    end
+
+    def underscored_service_name
+      @_underscored_service_name ||= service_name.gsub('-', '_')
     end
   end
 end

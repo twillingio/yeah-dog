@@ -12,7 +12,7 @@ RSpec.describe YeahDog do
       subject = described_class.configuration
 
       expect(subject).to be_instance_of YeahDog::Configuration
-      expect(subject).to have_attributes(app_name: YeahDog::Configuration::DEFAULT_APP_NAME)
+      expect(subject).to have_attributes(service_name: YeahDog::Configuration::DEFAULT_SERVICE_NAME)
     end
   end
 
@@ -20,10 +20,10 @@ RSpec.describe YeahDog do
     it 'permits configuring YeahDog.configuration' do
       expect do
         described_class.configure do |c|
-          c.app_name = 'SweetApp'
+          c.service_name = 'SweetApp'
         end
-      end.to change { described_class.configuration.app_name }
-        .from(YeahDog::Configuration::DEFAULT_APP_NAME)
+      end.to change { described_class.configuration.service_name }
+        .from(YeahDog::Configuration::DEFAULT_SERVICE_NAME)
         .to('SweetApp')
     end
   end
