@@ -1,20 +1,24 @@
-# YeahDog
+# Yeah Dog 🤙
 
-TODO: Delete this and the text below, and describe your gem
+This is (a) nice (instrumentation bundle).
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/yeah_dog`. To experiment with that code, run `bin/console` for an interactive prompt.
+This library pulls together a few commonly used libraries when instrumenting Rails applications via Datadog.
+
+- ddtrace
+- shopify/statsd-instrument
+- dogstatsd (for Datadog's own guides on the Sidekiq instrumentation)
+
+_The name is inspired by the Instagram reels from [@spookysivart](https://instagram.com/spookysivart)._
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add yeah_dog
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install yeah_dog
 
 ## Usage
 
