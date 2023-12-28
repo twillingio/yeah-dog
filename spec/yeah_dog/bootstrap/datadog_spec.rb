@@ -43,5 +43,33 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
         .to have_received(:instrument)
         .with(:active_support, cache_service: 'yeah-dog-rails-app-cache')
     end
+
+    context 'database instruments' do
+      it 'instruments ActiveRecord as [service-name]-db' do
+        configuration = YeahDog::Configuration.new.tap do |config|
+          config.service_name = 'yeah-dog-rails-app'
+        end
+        allow(YeahDog).to receive(:configuration).and_return(configuration)
+
+        described_class.apply!
+
+        expect(tracing_object)
+          .to have_received(:instrument)
+          .with(:active_record, service_name: 'yeah-dog-rails-app-db')
+      end
+
+      it 'instruments pg as [service-name]-db' do
+        configuration = YeahDog::Configuration.new.tap do |config|
+          config.service_name = 'yeah-dog-rails-app'
+        end
+        allow(YeahDog).to receive(:configuration).and_return(configuration)
+
+        described_class.apply!
+
+        expect(tracing_object)
+          .to have_received(:instrument)
+          .with(:pg, service_name: 'yeah-dog-rails-app-db')
+      end
+    end
   end
 end
