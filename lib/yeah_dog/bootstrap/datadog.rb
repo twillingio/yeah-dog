@@ -3,11 +3,20 @@
 module YeahDog
   module Bootstrap
     class Datadog
+      HTTP_CLIENTS_TO_SPLIT_BY_DOMAIN = %i[
+        excon
+        faraday
+        http
+        rest_client
+      ].freeze
+
       class << self
         def apply!
           apply_global_configuration!
+
           apply_caching_configuration!
           apply_database_configuration!
+          apply_http_configuration!
         end
 
         private
@@ -28,6 +37,14 @@ module YeahDog
           ::Datadog.configure do |c|
             c.tracing.instrument :active_record, service_name: database_service_name
             c.tracing.instrument :pg, service_name: database_service_name
+          end
+        end
+
+        def apply_http_configuration!
+          ::Datadog.configure do |c|
+            HTTP_CLIENTS_TO_SPLIT_BY_DOMAIN.each do |instrument_name|
+              c.tracing.instrument instrument_name, split_by_domain: true
+            end
           end
         end
 

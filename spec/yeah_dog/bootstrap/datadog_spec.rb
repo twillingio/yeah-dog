@@ -21,10 +21,7 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
 
   describe '.apply!' do
     it 'sets the Datadog default service' do
-      configuration = YeahDog::Configuration.new.tap do |config|
-        config.service_name = 'yeah-dog-rails-app'
-      end
-      allow(YeahDog).to receive(:configuration).and_return(configuration)
+      configure_service(name: 'yeah-dog-rails-app')
 
       described_class.apply!
 
@@ -32,10 +29,7 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
     end
 
     it 'sets the cache service name to [service-name]-cache' do
-      configuration = YeahDog::Configuration.new.tap do |config|
-        config.service_name = 'yeah-dog-rails-app'
-      end
-      allow(YeahDog).to receive(:configuration).and_return(configuration)
+      configure_service(name: 'yeah-dog-rails-app')
 
       described_class.apply!
 
@@ -46,10 +40,7 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
 
     context 'database instruments' do
       it 'instruments ActiveRecord as [service-name]-db' do
-        configuration = YeahDog::Configuration.new.tap do |config|
-          config.service_name = 'yeah-dog-rails-app'
-        end
-        allow(YeahDog).to receive(:configuration).and_return(configuration)
+        configure_service(name: 'yeah-dog-rails-app')
 
         described_class.apply!
 
@@ -59,10 +50,7 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
       end
 
       it 'instruments pg as [service-name]-db' do
-        configuration = YeahDog::Configuration.new.tap do |config|
-          config.service_name = 'yeah-dog-rails-app'
-        end
-        allow(YeahDog).to receive(:configuration).and_return(configuration)
+        configure_service(name: 'yeah-dog-rails-app')
 
         described_class.apply!
 
@@ -71,5 +59,24 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
           .with(:pg, service_name: 'yeah-dog-rails-app-db')
       end
     end
+
+    context 'HTTP libraries' do
+      described_class::HTTP_CLIENTS_TO_SPLIT_BY_DOMAIN.each do |http_instrument|
+        it "enables split_by_domain for #{http_instrument}" do
+          configure_service(name: 'yeah-dog-rails-app')
+
+          described_class.apply!
+
+          expect(tracing_object).to have_received(:instrument).with(http_instrument, split_by_domain: true)
+        end
+      end
+    end
+  end
+
+  def configure_service(name:)
+    configuration = YeahDog::Configuration.new.tap do |config|
+      config.service_name = name
+    end
+    allow(YeahDog).to receive(:configuration).and_return(configuration)
   end
 end
