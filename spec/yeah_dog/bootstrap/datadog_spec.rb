@@ -38,7 +38,7 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
         .with(:active_support, cache_service: 'yeah-dog-rails-app-cache')
     end
 
-    context 'database instruments' do
+    describe 'database instruments' do
       it 'instruments ActiveRecord as [service-name]-db' do
         configure_service(name: 'yeah-dog-rails-app')
 
@@ -60,7 +60,7 @@ RSpec.describe YeahDog::Bootstrap::Datadog do
       end
     end
 
-    context 'HTTP libraries' do
+    describe 'HTTP libraries' do
       described_class::HTTP_CLIENTS_TO_SPLIT_BY_DOMAIN.each do |http_instrument|
         it "enables split_by_domain for #{http_instrument}" do
           configure_service(name: 'yeah-dog-rails-app')

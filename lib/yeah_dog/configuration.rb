@@ -1,10 +1,10 @@
-# # frozen_string_literal: true
+# frozen_string_literal: true
 
 require 'active_support/all'
 
 module YeahDog
   class Configuration
-    DEFAULT_SERVICE_NAME = 'rails-app'.freeze
+    DEFAULT_SERVICE_NAME = 'rails-app'
 
     attr_accessor :service_name
 
