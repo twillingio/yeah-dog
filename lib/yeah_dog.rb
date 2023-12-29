@@ -4,9 +4,7 @@ require_relative 'yeah_dog/version'
 require_relative 'yeah_dog/configuration'
 require_relative 'yeah_dog/bootstrap/datadog'
 
-require 'datadog/statsd'
 require 'ddtrace'
-require 'statsd-instrument'
 
 module YeahDog
   class Error < StandardError; end
